@@ -4,3 +4,9 @@ server:
 spring:
   application:
     name: crawler-service
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 300000
+      connection-timeout: 30000
+      pool-name: HikariPool-Crawler
