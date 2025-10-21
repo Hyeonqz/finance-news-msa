@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'io.github.Hyeonqz'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 description = 'config-server'
 
 java {
@@ -23,8 +23,13 @@ ext {
 }
 
 dependencies {
+    // actuator
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // cloud-config-server
     implementation 'org.springframework.cloud:spring-cloud-config-server'
+
+    // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
