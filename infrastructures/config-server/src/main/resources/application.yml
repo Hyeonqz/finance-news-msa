@@ -1,0 +1,33 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: config-server
+
+  profiles:
+    active: native  # native 프로파일 활성화 필수
+
+  cloud:
+    config:
+      server:
+        native:
+          # 로컬 파일 시스템에서 설정 파일 위치
+          search-locations: file:../../config-repo
+        bootstrap: false
+
+# Actuator 설정
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, refresh, env
+  endpoint:
+    health:
+      show-details: always
+
+# 로깅 설정
+logging:
+  level:
+    org.springframework.cloud.config: DEBUG
+    org.springframework.boot: INFO
