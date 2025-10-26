@@ -1,0 +1,9 @@
+server:
+  port: 9090 # 8761은 Eureka의 기본 포트 (관례)
+
+eureka:
+  # instance 설정
+  instance:
+    hostname: localhost # Eureka Server의 hostname
+    instance-id: ${spring.application.name}:${server.port} # eureka-server:8761
+    prefer-ip-address: false

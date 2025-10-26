@@ -23,8 +23,16 @@ ext {
 }
 
 dependencies {
+    // spring actuator
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // spring cloud
+    // eureka-server
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
+    // config-client
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
+    // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

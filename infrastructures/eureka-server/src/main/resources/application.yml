@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: eureka-server
+  config:
+    # Config Server?? ??? ???? ??
+    import: "optional:configserver:http://localhost:8888"
+  cloud:
+    config:
+      fail-fast: true
+      retry:
+        initial-interval: 1000
+        max-attempts: 5
+        multiplier: 1.1
+        max-interval: 2000
+  profiles:
+    active: local  # ???? ??
+
+
+# Actuator ??
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+# ?? ??
+logging:
+  level:
+    org.springframework.cloud.config: DEBUG
+    org.springframework.boot: INFO
+    com.netflix.eureka: INFO
+    com.netflix.discovery: INFO

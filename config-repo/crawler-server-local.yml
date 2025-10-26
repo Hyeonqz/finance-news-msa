@@ -1,0 +1,67 @@
+server:
+  port: 9010
+
+spring:
+  application:
+    name: crawler-service
+
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 300000
+      connection-timeout: 30000
+      pool-name: HikariPool-Crawler
+
+eureka:
+  client:
+    service-url:
+      # Eureka Server 주소
+      defaultZone: http://localhost:8761/eureka/
+    # Eureka Server 에 등록할지 여부 true:등록, false:미등록
+    register-with-eureka: true
+    # Eureka Server 로부터 다른 서비스 목록을 가져올지 여부 true: 다른 서비스 호출 가능, false: 다른 서비스 호출 불가능 (호출 받기만 가능)
+    fetch-registry: true
+    # Eureka Server 서비스 목록 갱신 주기
+    registry-fetch-interval-seconds: 30
+    # actuator health 엔드포인트 Eureka health check로 사용
+    healthcheck:
+      enabled: true
+  # hostname 사용: false, ip:port 사용: true
+  instance:
+    prefer-ip-address: false
+    # Eureka 등록되는 인스턴스 고유 ID, ex) crawler-service:127.0.0.1:9010
+    instance-id: ${spring.application.name}:${spring.cloud.client.hostname}:${server.port}
+    # Eureka Server heartbeat 주기
+    lease-renewal-interval-in-seconds: 30
+    # Eureka Server 인스턴스 제거하기까지 기다리는 시간 보통 lease-renewal-interval-in-seconds 2,3배 설정
+    lease-expiration-duration-in-seconds: 90
+    # 메타데이터 key,value
+    metadata-map:
+      # 멀티 리전 배포 시 중요
+      zone: zone1
+      version: ${project.version:1.0.0}
+      startup: ${random.int[10000,99999]}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+        # Spring Boot Actuator 엔드포인트 중 노출할 것들
+        # health: /actuator/health (상태 체크)
+        # info: /actuator/info (애플리케이션 정보)
+        # metrics: /actuator/metrics (메트릭 조회)
+        # prometheus: /actuator/prometheus (Prometheus용 메트릭)
+
+  endpoint:
+    health:
+      show-details: always
+      # health 엔드포인트의 상세 정보 표시 수준
+      # always: 항상 모든 상세 정보 표시
+      # when-authorized: 인증된 사용자에게만 표시
+      # never: 상세 정보 숨김
+      # 실무: 개발 환경은 always, 운영은 when-authorized 권장
+      show-components: always
+      # health 엔드포인트의 컴포넌트별 상태 표시
+      # DB, Redis, Kafka 등 각 컴포넌트의 상태를 개별 표시
+      # 실무: 장애 발생 시 어느 컴포넌트가 문제인지 즉시 파악 가능

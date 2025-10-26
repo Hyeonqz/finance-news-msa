@@ -6,9 +6,9 @@ spring:
     active: local
 
   config:
-    import: "configserver:http://localhost:8000"
+    import: "configserver:http://localhost:8888"
 
   # cloud config
   cloud:
     config:
-      fail-fast: true # config server ?? ?? ? ?? ??
+      fail-fast: true
