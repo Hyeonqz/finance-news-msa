@@ -5,21 +5,10 @@ spring:
   profiles:
     active: local
 
-  # Spring Boot 3.x 방식: Config Server 연결 설정
   config:
-    import: "optional:configserver:http://localhost:8000"
+    import: "configserver:http://localhost:8888"
 
   cloud:
     config:
       fail-fast: true  # Config Server 연결 실패 시 애플리케이션 시작 중단
       # profile: local은 spring.profiles.active에서 자동으로 가져옴
-
-# Actuator 설정
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health, info, refresh, env
-  endpoint:
-    health:
-      show-details: always
