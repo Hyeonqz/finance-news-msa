@@ -3,8 +3,10 @@ package io.github.hyeonqz.crawlerservice;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-@EnableDiscoveryClient // eureka-client 활성화
+@EnableJpaAuditing      // jpa-auditing 활성화
+@EnableDiscoveryClient  // eureka-client 활성화
 @SpringBootApplication
 public class CrawlerServiceApplication {
 

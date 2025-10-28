@@ -45,6 +45,13 @@ dependencies {
     // spring actuator
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+    // crawler
+    implementation 'org.jsoup:jsoup:1.21.2' // 정적컨텐츠
+    implementation 'org.seleniumhq.selenium:selenium-java:4.38.0' // 동적컨텐츠
+
+    // kafka
+    implementation 'org.springframework.kafka:spring-kafka'
+
     // lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
