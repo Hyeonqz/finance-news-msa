@@ -1,2 +1,59 @@
 server:
   port: 8443 # 8443은 Gateway 의 기본 포트 (관례)
+
+spring:
+  cloud:
+    gateway:
+      # Eureka Service Discovery 통합
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+      # 라우팅 규칙
+      routes:
+        # Crawler Service 라우팅
+        - id: crawler-service
+          uri: lb://crawler-service  # Eureka에서 찾음
+          predicates:
+            - Path=/api/crawler/**
+          filters:
+            - RewritePath=/api/crawler/(?<segment>.*), /api/crawler/${segment}
+            - AddRequestHeader=X-Gateway-Request, true
+
+        # Intelligence Service 라우팅
+        - id: intelligence-service
+          uri: lb://intelligence-service
+          predicates:
+            - Path=/api/intelligence/**
+          filters:
+            - RewritePath=/api/intelligence/(?<segment>.*), /api/intelligence/${segment}
+
+        # Notification Service 라우팅
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/api/notification/**
+
+      # Global Filters
+      default-filters:
+        - AddResponseHeader=X-Response-Time, ${responseTime}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus, gateway
+  endpoint:
+    health:
+      show-details: always
