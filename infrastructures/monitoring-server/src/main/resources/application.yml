@@ -1,3 +1,6 @@
+server:
+  port: 8321
+
 spring:
   application:
     name: monitoring-server
