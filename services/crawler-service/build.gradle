@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'io.github.Hyeonqz'
-version = '0.0.1'
+version = '1.0.0'
 description = 'crawler-service'
 
 java {
@@ -21,8 +21,19 @@ configurations {
 }
 
 repositories {
+    // Nexus Repository
+    maven {
+        url = uri('http://localhost:8081/repository/maven-public/')
+        allowInsecureProtocol = true
+        credentials {
+            username = 'admin'
+            password = '123456'
+        }
+    }
+
     mavenCentral()
 }
+
 
 ext {
     set('springCloudVersion', "2025.0.0")
