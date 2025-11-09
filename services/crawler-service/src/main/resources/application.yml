@@ -2,9 +2,6 @@ spring:
   application:
     name: crawler-service
 
-  profiles:
-    active: local
-
   config:
     import: "configserver:http://localhost:8888"
 
@@ -12,3 +9,4 @@ spring:
     config:
       fail-fast: true  # Config Server 연결 실패 시 애플리케이션 시작 중단
       # profile: local은 spring.profiles.active에서 자동으로 가져옴
+

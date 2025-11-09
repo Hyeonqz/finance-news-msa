@@ -1,0 +1,15 @@
+server:
+  port: 9010
+
+spring:
+  application:
+    name: crawler-service
+
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 300000
+      connection-timeout: 30000
+      pool-name: HikariPool-Crawler
+
+# 추후 배포를 진행하게 되면 그 때 test.yml 에 설정을 잡아두자!
