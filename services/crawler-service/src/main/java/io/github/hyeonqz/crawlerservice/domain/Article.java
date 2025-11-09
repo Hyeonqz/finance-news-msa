@@ -1,5 +1,6 @@
 package io.github.hyeonqz.crawlerservice.domain;
 
+import io.github.Hyeonqz.common.base.BaseEntity;
 import io.github.hyeonqz.crawlerservice.domain.enums.ArticleStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Article {
+public class Article extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,19 +50,6 @@ public class Article {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ArticleStatus status;
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        if (status == null) {
-            status = ArticleStatus.PENDING;
-        }
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
 
     public void markAsProcessed() {
         this.status = ArticleStatus.PROCESSED;

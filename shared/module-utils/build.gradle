@@ -1,15 +1,72 @@
 plugins {
     id 'java-library'
+    id 'maven-publish'
 }
 
 group = 'io.github.Hyeonqz'
 version = '1.0.0'
+description = 'module-utils'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
 
 repositories {
+    // Nexus Repository
+    maven {
+        url = uri('http://localhost:8081/repository/maven-public/')
+        allowInsecureProtocol = true  // HTTP 허용 (로컬 개발용)
+        credentials {
+            username = 'admin'
+            password = '123456'
+        }
+    }
+
     mavenCentral()
 }
 
+// Deploy 설정
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = 'nexus'
+            url = 'http://localhost:8081/repository/maven-releases/'
+            allowInsecureProtocol = true
+            credentials {
+                username = 'admin'
+                password = '123456'
+            }
+        }
+    }
+}
+
+/*
+* 1. Clean & Build
+* $ ./gradlew clean build
+* 2. Publish to Nexus
+* $ ./gradlew publish
+*/
+
 dependencies {
+
+    // test
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

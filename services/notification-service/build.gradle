@@ -26,9 +26,17 @@ repositories {
 
 ext {
     set('springCloudVersion', "2025.0.0")
+    set('moduleCommonVersion', "1.0.0")
+    set('moduleExceptionsVersion', "1.0.0")
+    set('moduleUtilsVersion', "1.0.0")
 }
 
 dependencies {
+    // shared modules
+    implementation "io.github.Hyeonqz:module-common:${moduleCommonVersion}"
+    implementation "io.github.Hyeonqz:module-exceptions:${moduleExceptionsVersion}"
+    implementation "io.github.Hyeonqz:module-utils:${moduleUtilsVersion}"
+
     // spring core
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
